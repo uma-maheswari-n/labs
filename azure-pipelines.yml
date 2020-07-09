@@ -39,3 +39,17 @@ stages:
          repository: 'dockerdemonew'
          command: 'buildAndPush'
          Dockerfile: '**/Dockerfile'
+     - task: ArtifactoryGenericUpload@2
+       inputs:
+        artifactoryService: 'JFrogDevOps'
+        specSource: 'taskConfiguration'
+        fileSpec: |
+          {
+            "files": [
+              {
+                "pattern": "$(Build.ArtifactStagingDirectory)/",
+                "target": "example-repo-local/files"
+              }
+            ]
+          }
+        failNoOp: true
